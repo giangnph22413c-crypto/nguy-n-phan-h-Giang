@@ -1,0 +1,6 @@
+{
+  "name": "AlphaFin - CFA & FRM Mastery & Valuation Terminal",
+  "description": "Hệ thống học tập, luyện thi CFA & FRM 18 tháng, điểm tin vĩ mô gắn chuẩn LOS, định giá cổ phiếu thực chiến và đồng bộ Notion Error Tracker.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

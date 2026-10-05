@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AlphaFin - CFA & FRM Mastery & Valuation Terminal</title>
+    <meta name="description" content="Hệ thống học tập, luyện thi CFA & FRM 18 tháng, điểm tin vĩ mô gắn chuẩn LOS, định giá cổ phiếu thực chiến và đồng bộ Notion Error Tracker." />
+    <meta property="og:title" content="AlphaFin - CFA & FRM Mastery & Valuation Terminal" />
+    <meta property="og:description" content="Hệ thống học tập, luyện thi CFA & FRM 18 tháng, điểm tin vĩ mô gắn chuẩn LOS, định giá cổ phiếu thực chiến và đồng bộ Notion Error Tracker." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script>
+      (function() {
+        // 1. Filter out Vite client WebSocket logs
+        var origDebug = console.debug;
+        console.debug = function() {
+          if (arguments[0] && typeof arguments[0] === 'string' && arguments[0].indexOf('[vite]') !== -1) return;
+          return origDebug.apply(console, arguments);
+        };
+        var origError = console.error;
+        console.error = function() {
+          if (arguments[0] && typeof arguments[0] === 'string' && arguments[0].indexOf('[vite]') !== -1 && arguments[0].indexOf('websocket') !== -1) return;
+          return origError.apply(console, arguments);
+        };
+
+        // 2. Intercept Vite HMR WebSocket in preview iframe
+        var NativeWebSocket = window.WebSocket;
+        if (NativeWebSocket) {
+          function MockViteWebSocket(url, protocols) {
+            var isViteHmr = false;
+            if (protocols === 'vite-hmr') isViteHmr = true;
+            if (Array.isArray(protocols) && protocols.indexOf('vite-hmr') !== -1) isViteHmr = true;
+            if (typeof url === 'string' && (url.indexOf('token=') !== -1 || url.indexOf('24678') !== -1 || url.indexOf('5173') !== -1)) isViteHmr = true;
+
+            if (!isViteHmr) {
+              return new NativeWebSocket(url, protocols);
+            }
+
+            var target = new EventTarget();
+            target.readyState = 1; // WebSocket.OPEN
+            target.OPEN = 1;
+            target.CONNECTING = 0;
+            target.CLOSING = 2;
+            target.CLOSED = 3;
+            target.url = url;
+            target.protocol = 'vite-hmr';
+            target.binaryType = 'blob';
+            target.bufferedAmount = 0;
+            target.extensions = '';
+            target.send = function() {};
+            target.close = function() { target.readyState = 3; };
+            target.onopen = null;
+            target.onclose = null;
+            target.onerror = null;
+            target.onmessage = null;
+
+            setTimeout(function() {
+              var openEvt = new Event('open');
+              target.dispatchEvent(openEvt);
+              if (typeof target.onopen === 'function') target.onopen(openEvt);
+            }, 0);
+
+            return target;
+          }
+
+          MockViteWebSocket.prototype = NativeWebSocket.prototype;
+          MockViteWebSocket.CONNECTING = 0;
+          MockViteWebSocket.OPEN = 1;
+          MockViteWebSocket.CLOSING = 2;
+          MockViteWebSocket.CLOSED = 3;
+
+          window.WebSocket = MockViteWebSocket;
+        }
+
+        // 3. Prevent unhandled rejections from WebSocket closures
+        window.addEventListener('unhandledrejection', function(event) {
+          var reason = event && event.reason;
+          var msg = reason ? (reason.message || String(reason)) : '';
+          if (msg.indexOf('WebSocket') !== -1 || msg.indexOf('websocket') !== -1) {
+            event.preventDefault();
+          }
+        });
+      })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=JetBrains+Mono:wght@400;500;600&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,500&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+
